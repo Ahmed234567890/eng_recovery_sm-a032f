@@ -245,6 +245,10 @@ repository. Verified after boot:
 `/system/product` uses about 853 MB. `/system` has 131 MiB free (95% used),
 which is expected for a GSI with a full GApps package.
 
+After the recovery reboot cycle, GMS and Play Store were still running. The
+Play Store launches to `UnauthenticatedMainActivity` because no Google account
+has been added yet; Wi-Fi is up and `play.google.com` is reachable.
+
 ## 5. Boot verification
 
 ```
