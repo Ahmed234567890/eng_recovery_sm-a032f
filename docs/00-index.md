@@ -2,7 +2,8 @@
 
 This directory records the complete Phase 1 engineering work: how the stock
 recovery was analysed, exactly which bytes were changed, how the image was
-packaged, how it was verified, and what is planned for Phase 2.
+packaged, how it was verified, and the Phase 2 partition/GApps work that
+followed.
 
 Read in order:
 
@@ -16,7 +17,7 @@ Read in order:
 | 06 | [image-build.md](06-image-build.md) | Ramdisk packing, `mkbootimg` parameters, AVB wrapper, exact commands |
 | 07 | [verification.md](07-verification.md) | Hardware verification transcript: boot, menu, all five actions, unsigned sideload |
 | 08 | [usage-and-rollback.md](08-usage-and-rollback.md) | Day-to-day use, log locations, shell access, rollback |
-| 09 | [phase2-plan.md](09-phase2-plan.md) | Planned super enlargement and MindTheGapps installation (not executed) |
+| 09 | [phase2-plan.md](09-phase2-plan.md) | Executed super enlargement, MindTheGapps installation, AVB repair and verification |
 | 10 | [pitfalls.md](10-pitfalls.md) | Every trap hit during the work and how it was solved |
 
 ## Terminology
@@ -28,8 +29,8 @@ Read in order:
   work; hash `7f59a0cd…`.
 * **Phase 1** — signature bypass + five menu entries + shell tools + fixed
   image. This is what the current repository contains.
-* **Phase 2** — enlarge the `super` partition, add a `product` partition and
-  install MindTheGapps. Not started.
+* **Phase 2** — enlarge `system` and `system_ext`, install MindTheGapps into
+  `/system/product`, and rebuild the AVB footer. Completed and verified.
 
 ## One-paragraph summary
 
