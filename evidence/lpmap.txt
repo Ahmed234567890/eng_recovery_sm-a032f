@@ -1,0 +1,22 @@
+super: /dev/block/by-name/super
+metadata: max 65536 bytes, 2 slots, logical block 4096 bytes
+
+slot 0: metadata version 10.0, 3 partition(s)
+    extent 0: 2746368 sectors at super sector 2048 (linear)
+    extent 1: 1728 sectors at super sector 3021120 (linear)
+    extent 2: 580688 sectors at super sector 3819176 (linear)
+  system                              3328784 sectors = 1625 MiB (1704337408 bytes), 3 extent(s), attrs 0x1
+    extent 0: 272704 sectors at super sector 2748416 (linear)
+  system_ext                           272704 sectors = 133 MiB (139624448 bytes), 1 extent(s), attrs 0x1
+    extent 0: 796328 sectors at super sector 3022848 (linear)
+  vendor                               796328 sectors = 388 MiB (407719936 bytes), 1 extent(s), attrs 0x1
+
+slot 1: metadata version 10.0, 4 partition(s)
+    extent 0: 2745888 sectors at super sector 2048 (linear)
+  system                              2745888 sectors = 1340 MiB (1405894656 bytes), 1 extent(s), attrs 0x1
+    extent 0: 272704 sectors at super sector 2748416 (linear)
+  system_ext                           272704 sectors = 133 MiB (139624448 bytes), 1 extent(s), attrs 0x1
+    extent 0: 796328 sectors at super sector 3022848 (linear)
+  vendor                               796328 sectors = 388 MiB (407719936 bytes), 1 extent(s), attrs 0x1
+    extent 0: 2350688 sectors at super sector 3819520 (linear)
+  product                             2350688 sectors = 1147 MiB (1203552256 bytes), 1 extent(s), attrs 0x1

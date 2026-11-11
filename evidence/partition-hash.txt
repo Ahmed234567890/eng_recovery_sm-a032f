@@ -1,0 +1,13 @@
+Recovery partition read-back verification
+=========================================
+
+Device:   Samsung Galaxy A032F (per-unit serial redacted)
+State:    booted into the flashed Phase 1 recovery
+Command:  adb shell 'dd if=/dev/block/by-name/recovery bs=1048576 count=64 2>/dev/null | sha256sum'
+
+Output:
+
+82d6dbcf8687a9578b574e9b250057e3187c93aff385e39463c16d7849c3a9f9  -
+
+The hash matches images/recovery_phase1_fixed.img exactly, proving the image
+was written to the raw recovery partition without truncation or corruption.

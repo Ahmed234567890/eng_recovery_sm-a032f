@@ -1,0 +1,43 @@
+Runtime menu labels vector
+==========================
+
+Recovery PID during the dump: 269
+librecovery_ui.so base:       0xece82000
+menu_items vector object:     base + 0x3aa48 = 0xecebca48
+labels vector object:         base + 0x3aa54 = 0xecebca54
+
+Raw vector objects (6 x 32-bit words starting at 0xecebca48):
+
+  menu_items.begin      0xed4490e0
+  menu_items.end        0xed4491b0   (208 bytes = 13 x 16)
+  menu_items.capacity   0xed4491b0
+  labels.begin          0xed449380
+  labels.end            0xed449458
+  labels.capacity       0xed449458
+
+Labels size: end - begin = 0xD8 = 216 bytes = 18 libc++ std::string objects
+             (12 bytes each on 32-bit ARM).
+
+Decoded labels:
+
+   0  Reboot system now
+   1  Reboot to bootloader
+   2  Enter fastboot
+   3  Apply update from ADB
+   4  Apply update from SD card
+   5  Wipe data/factory reset
+   6  Wipe cache partition
+   7  Mount /system
+   8  View recovery logs
+   9  Run graphics test
+  10  Run locale test
+  11  Enter rescue
+  12  Power off
+  13  Mount all       (action 20)
+  14  Unmount         (action 21)
+  15  Part info       (action 22)
+  16  Save logs       (action 23)
+  17  Reboot rec      (action 24)
+
+The stock menu_items vector remains 13 x 16 bytes. hook_invoke maps indexes
+13..17 to builtin actions 20..24; indexes 0..12 read the original table.

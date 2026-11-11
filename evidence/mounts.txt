@@ -1,0 +1,17 @@
+rootfs / rootfs rw,seclabel 0 0
+tmpfs /dev tmpfs rw,seclabel,nosuid,relatime,size=946928k,nr_inodes=236732,mode=755 0 0
+devpts /dev/pts devpts rw,seclabel,relatime,mode=600,ptmxmode=000 0 0
+proc /proc proc rw,relatime,gid=3009,hidepid=2 0 0
+sysfs /sys sysfs rw,seclabel,relatime 0 0
+selinuxfs /sys/fs/selinux selinuxfs rw,relatime 0 0
+tmpfs /mnt tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=946928k,nr_inodes=236732,mode=755,gid=1000 0 0
+tmpfs /apex tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=946928k,nr_inodes=236732,mode=755 0 0
+tmpfs /linkerconfig tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=946928k,nr_inodes=236732,mode=755 0 0
+tmpfs /mnt/installer tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=946928k,nr_inodes=236732,mode=755,gid=1000 0 0
+tmpfs /mnt/androidwritable tmpfs rw,seclabel,nosuid,nodev,noexec,relatime,size=946928k,nr_inodes=236732,mode=755,gid=1000 0 0
+none /acct cgroup rw,nosuid,nodev,noexec,relatime,cpuacct 0 0
+tmpfs /tmp tmpfs rw,seclabel,relatime,size=946928k,nr_inodes=236732 0 0
+none /config configfs rw,relatime 0 0
+adb /dev/usb-ffs/adb functionfs rw,relatime 0 0
+fastboot /dev/usb-ffs/fastboot functionfs rw,relatime 0 0
+/dev/block/mmcblk0p52 /mnt/eng/cache ext4 rw,seclabel,relatime,data=ordered 0 0

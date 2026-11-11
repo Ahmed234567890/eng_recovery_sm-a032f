@@ -1,0 +1,48 @@
+Published artifact hashes
+=========================
+
+Generated from the verified Phase 1 build. Sizes are in bytes.
+
+Flashable image
+---------------
+82d6dbcf8687a9578b574e9b250057e3187c93aff385e39463c16d7849c3a9f9  67108864  images/recovery_phase1_fixed.img
+
+Patched binaries
+----------------
+54009dd289d1898d2b940c4104fdad3743d55dc9b5936101f501f125116313fb   323584  binaries/recovery_patched
+75f03910470e8f1264db7c7abff4b5f3c7582813173d2bb26dd665415c90aead   249856  binaries/librecovery_ui_patched.so
+
+Tools added to the ramdisk
+--------------------------
+ce28726a84a1a666a206f1dcae28acc171534c398a20b61f6571997797658847     4234  tools/recovery-tools
+0e7584355a46b83521276e670baaa74bee32876a0f1a5f24c0d9be0c321ba393  1256856  tools/bash  (GNU bash 5.2.37, arm-unknown-linux-musleabihf)
+06cfc0564ed51752bde77a142546486b3dde5cf894320834cf4e2c3ff3b1ac38  1079156  tools/busybox  (BusyBox v1.28.1)
+ce6affc26667df8861d00c0299092469fd0beb024bb0bee0bbeef19038c956ee    28548  tools/lpmap
+
+Assembly blobs
+--------------
+cf0e45374076dc6ce9c6af87b6ce21594298571c37fae676643064a25eb7669c      155  build/handler.bin
+771de1e731dcbfac06815bf93c5217359a40a97c8c597493623ae547b7d6e5bd      288  build/ui_hook2.bin
+
+Intermediate boot artifacts (published build; not in the repository)
+---------------------------------------------------------------------
+a572d0fa3c6a168f7de1633a62031b2e33e121b9a986c6a36af7964a53201581  9863349  fixed-ramdisk.gz
+510ac745a3b13c7ea0c50acf7b8c242c4e95241c2a9a761ebadd361b8222a861 33099776  fixed-boot.img
+
+Build inputs (OEM-derived; NOT published)
+-----------------------------------------
+7780f3b102a06d50cac7a0c5f918163d2d7cf0e6a2863964b89ab86e72254f69   314380  pristine recovery (stock, verifies packages)
+7f59a0cdda36e520a0c16f2087be7fe0e7883e15b766da39de80582bcc3b2055   314380  known-good recovery (signature bypass only)
+f3e10ef33f248069c820f3357ce1427b86adcc99ee8f1cf905f551780e313d26   238860  pristine librecovery_ui.so
+0b98b361b25accd86bdffda1883d1974caa3020bebac3fee19da989db0be69a3 22845456  kernel
+b34fd2f27a6d20a9eab8cdda664030518e60fcacdff1c8dfcfac3eeaef86837b    89645  dtb
+13e34fc63ec21418db375013192189e8b91ff91ac0ea877aa905d9c426716ae3   294408  recovery_dtbo
+3b558db5c34974145337af0f472cc12fdf38f4ff0fc80e706ce468c14d8da205     2112  vbmeta-original.bin
+
+Rollback image (NOT in the repository)
+--------------------------------------
+f94286f2aaa757d7dda7bf3ce6a8573dfc7f94d22c2b29579301a9869fba74d4 67108864  recovery-current.img (signature bypass, stock menu)
+
+Recovery partition read-back
+----------------------------
+82d6dbcf8687a9578b574e9b250057e3187c93aff385e39463c16d7849c3a9f9 67108864  /dev/block/by-name/recovery

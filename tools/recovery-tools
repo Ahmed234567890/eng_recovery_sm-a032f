@@ -1,0 +1,169 @@
+#!/system/bin/sh
+# Enhanced recovery menu backend.
+# Actions:
+#   20  mount all logical/physical partitions under /mnt/eng
+#   21  unmount everything under /mnt/eng
+#   22  write partition/mount/df information to the recovery log
+#   23  save recovery log, dmesg, mounts, lpmap and df to cache
+#   24  reboot back into recovery
+#
+# Output is appended to /tmp/recovery.log, which is what the built-in
+# "View recovery logs" menu item displays.
+
+PATH=/system/bin:/sbin:/bin
+export PATH
+
+LOG=/tmp/recovery.log
+ENG=/mnt/eng
+CACHE=$ENG/cache
+CACHE_DEV=/dev/block/mmcblk0p52
+LP=/system/bin/lpmap
+
+log() {
+    echo "[recovery-tools] $*" >>"$LOG"
+}
+
+is_mounted() {
+    grep -q " $1 " /proc/mounts
+}
+
+mount_cache() {
+    mkdir -p "$CACHE" 2>/dev/null
+    if is_mounted "$CACHE"; then
+        return 0
+    fi
+    if mount -t ext4 -o rw "$CACHE_DEV" "$CACHE" >>"$LOG" 2>&1; then
+        log "mounted cache $CACHE_DEV -> $CACHE"
+        return 0
+    fi
+    log "cache mount failed ($CACHE_DEV)"
+    return 1
+}
+
+# mount_part <name>
+# Try to mount /dev/block/mapper/<name> read-only at /mnt/eng/<name>.
+# If the device is already mounted elsewhere (common for system_ext),
+# bind-mount the existing mountpoint instead.
+mount_part() {
+    p=$1
+    node=/dev/block/mapper/$p
+    mp=$ENG/$p
+
+    mkdir -p "$mp" 2>/dev/null
+    if is_mounted "$mp"; then
+        log "$mp is already mounted"
+        return 0
+    fi
+    if [ ! -e "$node" ]; then
+        log "$p: no mapper node ($node), skipped"
+        return 1
+    fi
+    if mount -t ext4 -o ro "$node" "$mp" >>"$LOG" 2>&1; then
+        log "mounted $p -> $mp (ro)"
+        return 0
+    fi
+
+    line=$(grep "^$node " /proc/mounts | head -n 1)
+    set -- $line
+    src=$2
+    if [ -n "$src" ] && [ "$src" != "$mp" ]; then
+        if mount --bind "$src" "$mp" >>"$LOG" 2>&1; then
+            log "bind-mounted $src -> $mp ($p already mounted)"
+            return 0
+        fi
+        log "$p: bind mount from $src failed"
+    else
+        log "$p: mount failed"
+    fi
+    return 1
+}
+
+mount_all() {
+    mkdir -p "$ENG" 2>/dev/null
+    mount_part system
+    mount_part system_ext
+    mount_part vendor
+    mount_part product
+
+    mount_cache
+
+    # Best-effort external SD card.
+    for dev in /dev/block/mmcblk1p1 /dev/block/mmcblk1; do
+        [ -e "$dev" ] || continue
+        mkdir -p "$ENG/sdcard" 2>/dev/null
+        if is_mounted "$ENG/sdcard"; then
+            break
+        fi
+        if mount -t vfat -o ro "$dev" "$ENG/sdcard" >>"$LOG" 2>&1; then
+            log "mounted sdcard $dev -> $ENG/sdcard"
+        else
+            log "sdcard mount failed ($dev)"
+        fi
+        break
+    done
+
+    log "mount all finished"
+}
+
+unmount_all() {
+    for mp in "$ENG/sdcard" "$ENG/product" "$ENG/vendor" "$ENG/system_ext" "$ENG/system" "$CACHE"; do
+        if is_mounted "$mp"; then
+            if umount "$mp" >>"$LOG" 2>&1; then
+                log "unmounted $mp"
+            else
+                log "umount $mp failed"
+            fi
+        fi
+    done
+    log "unmount all finished"
+}
+
+partition_info() {
+    {
+        echo "===== partition info ====="
+        date
+        echo "--- lpmap -l -v ---"
+        "$LP" -l -v
+        echo "--- /proc/mounts ---"
+        cat /proc/mounts
+        echo "--- /dev/block/mapper ---"
+        ls -l /dev/block/mapper 2>/dev/null
+        echo "--- df -h ---"
+        df -h
+        echo "===== end partition info ====="
+    } >>"$LOG" 2>&1
+    log "partition information written to $LOG"
+}
+
+save_logs() {
+    mount_cache || {
+        log "logs not saved: cache is not mounted"
+        return 1
+    }
+    dir=$CACHE/recovery/logs-$(date +%Y%m%d-%H%M%S)
+    mkdir -p "$dir" 2>/dev/null
+    cp "$LOG" "$dir/recovery.log" 2>/dev/null
+    dmesg >"$dir/dmesg.txt" 2>/dev/null
+    cat /proc/mounts >"$dir/mounts.txt" 2>/dev/null
+    "$LP" -l -v >"$dir/lpmap.txt" 2>&1
+    df -h >"$dir/df.txt" 2>/dev/null
+    sync
+    log "logs saved to $dir"
+}
+
+reboot_recovery() {
+    log "rebooting to recovery"
+    sync
+    /system/bin/reboot recovery
+}
+
+log "action=$1 started"
+case "$1" in
+    20) mount_all ;;
+    21) unmount_all ;;
+    22) partition_info ;;
+    23) save_logs ;;
+    24) reboot_recovery ;;
+    *) log "unknown action '$1'" ;;
+esac
+log "action=$1 finished"

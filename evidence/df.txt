@@ -1,0 +1,7 @@
+Filesystem            Size  Used Avail Use% Mounted on
+tmpfs                 925M  912K  924M   1% /dev
+tmpfs                 925M     0  925M   0% /mnt
+tmpfs                 925M     0  925M   0% /apex
+tmpfs                 925M  4.0K  925M   1% /linkerconfig
+tmpfs                 925M   44K  925M   1% /tmp
+/dev/block/mmcblk0p52 286M  5.8M  280M   3% /mnt/eng/cache

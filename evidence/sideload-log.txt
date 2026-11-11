@@ -1,0 +1,3 @@
+[   56.992666] Update package verification took 0.0 s (result 0).
+[   57.082065] UNSIGNED-SIDELOAD-TEST-OK
+[   57.286311] Install from ADB completed with status 0.

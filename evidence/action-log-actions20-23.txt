@@ -1,0 +1,17 @@
+[recovery-tools] action=20 started
+[recovery-tools] system: no mapper node (/dev/block/mapper/system), skipped
+[recovery-tools] system_ext: no mapper node (/dev/block/mapper/system_ext), skipped
+[recovery-tools] vendor: no mapper node (/dev/block/mapper/vendor), skipped
+[recovery-tools] product: no mapper node (/dev/block/mapper/product), skipped
+[recovery-tools] mounted cache /dev/block/mmcblk0p52 -> /mnt/eng/cache
+[recovery-tools] mount all finished
+[recovery-tools] action=20 finished
+[recovery-tools] action=21 started
+[recovery-tools] unmounted /mnt/eng/cache
+[recovery-tools] unmount all finished
+[recovery-tools] action=21 finished
+[recovery-tools] action=22 started
+[recovery-tools] partition information written to /tmp/recovery.log
+[recovery-tools] action=22 finished
+[recovery-tools] action=23 started
+[recovery-tools] mounted cache /dev/block/mmcblk0p52 -> /mnt/eng/cache
